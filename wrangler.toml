@@ -1,0 +1,31 @@
+name = "personallog-ai"
+main = "src/worker.ts"
+compatibility_date = "2025-03-01"
+
+# KV Namespace bindings — create with: wrangler kv namespace create
+# Then replace the IDs below with the ones output by the command
+[[kv_namespaces]]
+binding = "MEMORY"
+id = "YOUR_MEMORY_KV_ID"
+preview_id = "YOUR_MEMORY_PREVIEW_ID"
+
+[[kv_namespaces]]
+binding = "FILES"
+id = "YOUR_FILES_KV_ID"
+preview_id = "YOUR_FILES_PREVIEW_ID"
+
+[[kv_namespaces]]
+binding = "ANALYTICS_KV"
+id = "YOUR_ANALYTICS_KV_ID"
+preview_id = "YOUR_ANALYTICS_PREVIEW_ID"
+
+# Secrets (set with: wrangler secret put)
+# DEEPSEEK_API_KEY — Required. Your DeepSeek API key.
+# GITHUB_TOKEN — Optional. For repo file browser.
+# GITHUB_REPO — Optional. e.g. "username/personallog-ai"
+# TELEGRAM_BOT_TOKEN — Optional. For Telegram integration.
+# DISCORD_PUBLIC_KEY — Optional. For Discord integration.
+# DISCORD_BOT_TOKEN — Optional. For Discord integration.
+# WHATSAPP_VERIFY_TOKEN — Optional. For WhatsApp integration.
+# WHATSAPP_ACCESS_TOKEN — Optional. For WhatsApp integration.
+# OWNER_PASSWORD — Optional. Password for web app access.

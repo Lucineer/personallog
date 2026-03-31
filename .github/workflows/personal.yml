@@ -1,0 +1,51 @@
+name: Personal Agent Run
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Every 30 minutes
+  workflow_dispatch:
+
+jobs:
+  agent-run:
+    runs-on: ubuntu-latest
+    name: Agent Maintenance
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run agent maintenance
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          WORKER_URL: ${{ secrets.WORKER_URL }}
+          OWNER_PASSWORD: ${{ secrets.OWNER_PASSWORD }}
+        run: |
+          node -e "
+          // Ping the worker to keep it alive and trigger maintenance
+          const url = process.env.WORKER_URL || 'http://localhost:8787';
+          const password = process.env.OWNER_PASSWORD || '';
+
+          async function run() {
+            // Check status
+            const headers = password ? { Authorization: 'Bearer ' + password } : {};
+            const status = await fetch(url + '/api/status', { headers });
+            console.log('Agent status:', await status.text());
+
+            // Trigger memory consolidation
+            const consolidate = await fetch(url + '/api/maintenance/consolidate', {
+              method: 'POST',
+              headers: { ...headers, 'Content-Type': 'application/json' },
+              body: JSON.stringify({ action: 'consolidate' })
+            });
+            console.log('Consolidation:', await consolidate.text());
+          }
+
+          run().catch(e => { console.error(e); process.exit(1); });
+          "

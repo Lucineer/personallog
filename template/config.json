@@ -1,0 +1,56 @@
+{
+  "agent": {
+    "name": "Personallog",
+    "model": "deepseek-chat",
+    "maxTokens": 4096,
+    "temperature": 0.7
+  },
+  "channels": {
+    "web": {
+      "enabled": true,
+      "requireAuth": true
+    },
+    "telegram": {
+      "enabled": false,
+      "botToken": "TELEGRAM_BOT_TOKEN",
+      "webhookUrl": "/api/channels/telegram"
+    },
+    "discord": {
+      "enabled": false,
+      "publicKey": "DISCORD_PUBLIC_KEY",
+      "botToken": "DISCORD_BOT_TOKEN"
+    },
+    "whatsapp": {
+      "enabled": false,
+      "verifyToken": "WHATSAPP_VERIFY_TOKEN",
+      "accessToken": "WHATSAPP_ACCESS_TOKEN",
+      "phoneNumberId": "WHATSAPP_PHONE_NUMBER_ID"
+    },
+    "email": {
+      "enabled": false
+    }
+  },
+  "memory": {
+    "maxConversations": 100,
+    "maxMessagesPerConversation": 100,
+    "factDecayHours": 720
+  },
+  "a2a": {
+    "enabled": true,
+    "allowDiscovery": true,
+    "allowMessages": true
+  },
+  "mcp": {
+    "enabled": true,
+    "exposeTools": ["chat", "get_profile", "list_files", "read_file", "get_capabilities"]
+  },
+  "github": {
+    "enabled": false,
+    "token": "GITHUB_TOKEN",
+    "repo": "GITHUB_REPO"
+  },
+  "analytics": {
+    "enabled": true,
+    "retentionDays": 30
+  }
+}

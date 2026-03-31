@@ -11,6 +11,7 @@ Open-source. Free. Deploys in 60 seconds on Cloudflare Workers.
 personallog.ai is a personal AI agent that lives inside your repository. Fork it, add your API key, deploy, and you have a fully working AI agent with:
 
 - **Messenger-style web UI** — Chat with your agent like WhatsApp meets ChatGPT
+- **Animated landing page** — Typing effect, particle animations, gradient text that converts
 - **Multi-channel** — Telegram, Discord, WhatsApp, email — one agent, everywhere
 - **Persistent memory** — Remembers everything across all conversations and channels
 - **File browser** — Browse and discuss your repo files directly in the chat

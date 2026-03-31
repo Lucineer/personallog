@@ -132,6 +132,13 @@ nav .container {
   font-size: 1.15rem; color: var(--text-secondary); max-width: 540px;
   margin: 0 auto 40px; line-height: 1.7;
 }
+.typing-cursor {
+  display: inline-block;
+  color: var(--accent);
+  animation: blink 1s step-end infinite;
+  font-weight: 100;
+}
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 .hero-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 .btn-hero {
   padding: 14px 32px; border-radius: var(--radius-sm); font-size: 0.95rem; font-weight: 600;
@@ -333,7 +340,7 @@ footer {
   <div class="hero-content">
     <div class="hero-badge"><span class="dot"></span> Open-source and free forever</div>
     <h1>Your personal AI.<br><span class="gradient-word">Living in your repo.</span></h1>
-    <p>Open-source. Free. Deploys in 60 seconds on Cloudflare Workers. Your agent knows your code, remembers your conversations, and lives wherever you need it.</p>
+    <p>Open-source. Free. <span id="typingText"></span><span class="typing-cursor">|</span></p>
     <div class="hero-buttons">
       <a href="#deploy" class="btn-hero primary">Get Started</a>
       <a href="https://github.com" target="_blank" rel="noopener" class="btn-hero secondary">View on GitHub &#8599;</a>
@@ -560,6 +567,47 @@ footer {
       scrolled = false;
     }
   });
+
+  // -- Typing animation --
+  (function() {
+    var phrases = [
+      'Deploys in 60 seconds on Cloudflare Workers.',
+      'Remembers every conversation, forever.',
+      'One agent. Every channel. Telegram, Discord, WhatsApp.',
+      'The repo IS the agent. Fork it, it\'s yours.',
+      'Persistent memory. File browser. A2A protocol.',
+      'Zero cost. 100k requests/day free tier.'
+    ];
+    var el = document.getElementById('typingText');
+    if (!el) return;
+    var phraseIndex = 0;
+    var charIndex = 0;
+    var deleting = false;
+    var delay = 80;
+
+    function type() {
+      var current = phrases[phraseIndex];
+      if (deleting) {
+        el.textContent = current.substring(0, charIndex - 1);
+        charIndex--;
+        delay = 40;
+      } else {
+        el.textContent = current.substring(0, charIndex + 1);
+        charIndex++;
+        delay = 80;
+      }
+      if (!deleting && charIndex === current.length) {
+        delay = 2500;
+        deleting = true;
+      } else if (deleting && charIndex === 0) {
+        deleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        delay = 300;
+      }
+      setTimeout(type, delay);
+    }
+    type();
+  })();
 })();
 </script>
 </body>
